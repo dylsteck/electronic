@@ -1,6 +1,6 @@
 # electronic
 
-A cast only [Farcaster](https://farcaster.xyz) client built with Electron
+A cast only [Farcaster](https://farcaster.xyz) client built with [Electron](https://electronjs.org) and [Sign In with Neynar](https://docs.neynar.com/docs/how-to-let-users-connect-farcaster-accounts-with-write-access-for-free-using-sign-in-with-neynar-siwn)
 
 By [@dylsteck](https://dylansteck.com) | MIT License, 2024
 
