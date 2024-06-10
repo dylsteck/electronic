@@ -7,5 +7,6 @@ app
 db/*.db
 .DS_Store
 /dist/*
+/renderer/build
 !/dist/*.dmg
 !/dist/*.zip
