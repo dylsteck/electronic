@@ -2,6 +2,10 @@ node_modules
 *.log
 .next
 app
-dist
 .env
+.env.*
 db/*.db
+.DS_Store
+/dist/*
+!/dist/*.dmg
+!/dist/*.zip
