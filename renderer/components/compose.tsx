@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useCast } from "../hooks/use-cast";
 import { useNeynarAuth } from "../context/neynar-auth-context";
+import { XCircleIcon } from "@heroicons/react/16/solid";
 
 export default function Compose() {
-  const [text, setText] = useState("");
+  const [text, setText] = React.useState("");
   const postCast = useCast();
   const { user } = useNeynarAuth();
-  const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const [parentUrl, setParentUrl] = useState("");
-  const [parentHash, setParentHash] = useState("");
-  const [isParentUrlChecked, setIsParentUrlChecked] = useState(false);
-  const [isParentHashChecked, setIsParentHashChecked] = useState(false);
+  const [alertMessage, setAlertMessage] = React.useState<string | null>(null);
+  const [parentUrl, setParentUrl] = React.useState("");
+  const [parentHash, setParentHash] = React.useState("");
+  const [isParentUrlChecked, setIsParentUrlChecked] = React.useState(false);
+  const [isParentHashChecked, setIsParentHashChecked] = React.useState(false);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
@@ -55,11 +56,11 @@ export default function Compose() {
         parent: isParentUrlChecked ? parentUrl : isParentHashChecked ? parentHash : undefined,
       });
       if (response && response.cast && response.cast.hash) {
-        setAlertMessage(`Cast posted successfully! Hash: ${response.cast.hash}`);
+        setAlertMessage(response.cast.hash);
       } else {
         setAlertMessage("Failed to post cast. No hash returned.");
       }
-      setText(""); // Clear the textarea after posting
+      setText("");
     } catch (error) {
       setAlertMessage("Failed to post cast.");
       console.error("Failed to post cast", error);
@@ -67,17 +68,16 @@ export default function Compose() {
   };
 
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-md w-full max-w-md">
-      <h2 className="text-lg mb-4">Cast below</h2>
+    <div className="bg-[#FFFFFF] text-[#000000] p-2 rounded-lg w-[60vw] max-w-md">
       <textarea
         value={text}
         onChange={handleTextChange}
-        className="w-full p-2 bg-gray-800 text-white rounded-md mb-4"
+        className="w-full p-2 bg-white text-black rounded-md mb-4 focus:outline-none"
         rows={4}
-        placeholder="Start typing a new cast here..."
+        placeholder="Start composing a new cast..."
       />
       <div className="flex flex-col space-y-4 mb-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 bg-gray-200 p-1 rounded-lg">
           <input
             type="checkbox"
             checked={isParentUrlChecked}
@@ -87,12 +87,12 @@ export default function Compose() {
             type="text"
             value={parentUrl}
             onChange={(e) => setParentUrl(e.target.value)}
-            className="flex-grow p-2 bg-gray-800 text-white rounded-md"
+            className="flex-grow p-2 text-black rounded-md bg-gray-200 focus:outline-none"
             placeholder="Parent URL"
             disabled={!isParentUrlChecked}
           />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 bg-gray-200 p-1 rounded-lg">
           <input
             type="checkbox"
             checked={isParentHashChecked}
@@ -102,7 +102,7 @@ export default function Compose() {
             type="text"
             value={parentHash}
             onChange={(e) => setParentHash(e.target.value)}
-            className="flex-grow p-2 bg-gray-800 text-white rounded-md"
+            className="flex-grow p-2 bg-gray-200 text-black rounded-md focus:outline-none"
             placeholder="Parent Hash"
             disabled={!isParentHashChecked}
           />
@@ -110,15 +110,26 @@ export default function Compose() {
       </div>
       <button
         onClick={handlePost}
-        className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-[#7F5FC6] text-[#FFFFFF] font-bold py-2 px-10 rounded-lg"
       >
         Cast
       </button>
-      {alertMessage && (
-        <div className="mt-4 p-2 bg-gray-800 text-white rounded-md">
-          {alertMessage}
-        </div>
-      )}
+      {alertMessage ?
+        alertMessage.startsWith('0x') ? 
+        (
+          <div className="flex flex-row gap-2 items-center mt-4 p-2 bg-[#8465CB] text-[#FFFFFF] rounded-md">
+            Casted successfully! <a className="underline font-medium" href={`https://warpcast.com/${user.fname}/${alertMessage.slice(0, 10)}`} target="_blank">View here</a>
+            <XCircleIcon className="h-4 w-4 ml-2 cursor-pointer" onClick={() => setAlertMessage(null)} />
+          </div>
+        )
+         : 
+         (
+          <div className="flex flex-row gap-2 items-center mt-4 p-2 bg-[#EA3323] text-[#FFFFFF] rounded-md">
+            {alertMessage}
+            <XCircleIcon className="h-4 w-4 ml-2 cursor-pointer" onClick={() => setAlertMessage(null)} />
+          </div>
+        )
+      : null }
     </div>
   );
 }

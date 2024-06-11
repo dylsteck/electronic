@@ -12,4 +12,5 @@ https://github.com/dylsteck/electronic/assets/12853808/4f490861-193f-45d1-94e6-e
 1) Download this repo as a .zip
 2) Unzip the file
 3) Find the approriate `.zip` or .`dmg` file in the `/dist` subfolder
-4) Open the file and follow your operating system's app installation process
+4) Open the file and follow your operating system's app installation process <br/>
+_note_: if you're on a Mac, you might need to click with two fingers and select "Open" to bypass the security warning since this app is not on the App Store.

@@ -10,7 +10,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
   const mainWindow = createWindow('main', {
     width: 1000,
-    height: 600,
+    height: 1000,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -18,7 +18,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
   if (isProd) {
     const server = express();
-    const port = 3000;
+    const port = 9876;
     const appPath = path.join(__dirname, '../app');
 
     server.use(express.static(appPath));

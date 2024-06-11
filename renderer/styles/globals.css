@@ -4,12 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-[#353535] text-white;
+    @apply bg-[#2d2d2d] text-white;
   }
 }
-
-/* @layer components {
-  .btn-blue {
-    @apply text-white font-bold px-4 py-2 rounded bg-blue-600 hover:bg-blue-500;
-  }
-} */
